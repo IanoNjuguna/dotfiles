@@ -25,7 +25,8 @@ call plug#begin()
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
 
-Plug 'https://github.com/rafi/awesome-vim-colorschemes' " Retro Scheme
+" Retro Scheme
+Plug 'https://github.com/rafi/awesome-vim-colorschemes'
 
 " Polyglot
 Plug 'sheerun/vim-polyglot'
@@ -33,13 +34,11 @@ Plug 'sheerun/vim-polyglot'
 " IDE
 Plug 'https://github.com/neoclide/coc.nvim', {'branch': 'release'}
 
-Plug 'https://github.com/ryanoasis/vim-devicons' " Developer Icons
+" Developer Icons
+Plug 'https://github.com/ryanoasis/vim-devicons'
 
 " Any valid git URL is allowed
 Plug 'https://github.com/junegunn/vim-github-dashboard.git'
-
-" Jedi
-Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build', 'branch': 'main' }
 
 " On-demand loading
 Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -140,4 +139,4 @@ let g:airline_symbols.linenr = ''
 
 inoremap <expr> <Tab> pumvisible() ? coc#_select_confirm() : "<Tab>"
 
-let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-tsserver', 'coc-json', 'coc-html', 'coc-css', 'coc-clangd', 'coc-jedi']
+let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-tsserver', 'coc-html', 'coc-css', 'coc-clangd', 'coc-pyright']
