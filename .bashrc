@@ -118,6 +118,8 @@ fi
 
 # sign commits alias
 alias commit='commit -S'
+
+# gnupg - verifies signed commits in GitHub
 export GPG_TTY=$(tty)
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
@@ -128,4 +130,6 @@ alias gcc='gcc -Wall -Werror -pedantic -Wextra -std=gnu89'
 # vim == nvim
 alias vim='nvim'
 
-PATH=/usr/bin/node:$PATH
+# set node path
+export PATH=/usr/bin/node:$PATH
+export PATH="$HOME/.npm/versions/node/$(npm --version)/bin:$PATH"
