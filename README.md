@@ -1,10 +1,10 @@
-# Config-Files
+# NeoVim Config
 
-## Config Files
+## A NeoVim Config Template
 
-These are the config files for my developer experience.
+These repository is a NeoVim config template that makes software development a pleasant experience.
 
-## TO-DO
+### TO-DO
 
 ``` bash
 I will link a YouTube Tutorial for the setup process here
