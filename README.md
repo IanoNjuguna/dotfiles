@@ -2,7 +2,7 @@
 
 ## A NeoVim Config Template
 
-These repository is a NeoVim config template that makes software development a pleasant experience.
+This repository is a NeoVim config template that makes software development a pleasant experience.
 
 ### TO-DO
 
