@@ -20,13 +20,18 @@ set background=dark
 " Enable syntax highlighting
 :syntax enable
 
+" Configure column highlight
+set colorcolumn=80
+hi ColorColumn ctermbg=242 guibg=#4c4c4c
+
+
 call plug#begin()
 
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
 
-" Retro Scheme
-Plug 'https://github.com/rafi/awesome-vim-colorschemes'
+" Theme
+Plug 'NLKNguyen/papercolor-theme'
 
 " Polyglot
 Plug 'sheerun/vim-polyglot'
@@ -70,7 +75,7 @@ Plug 'https://github.com/tpope/vim-commentary'
 
 " Asynchronous Linter Engine (ALE)
 Plug 'dense-analysis/ale'
- 
+
 "Betty-ale-vim
 Plug 'JuanDAC/betty-ale-vim'
 
@@ -98,11 +103,15 @@ Plug 'https://github.com/ap/vim-css-color'
 Plug 'https://github.com/preservim/tagbar'
 
 " CTRL + N for multiple cursors
-Plug 'https://github.com/terryma/vim-multiple-cursors' 
+Plug 'https://github.com/terryma/vim-multiple-cursors'
 
 set encoding=UTF-8
 
 call plug#end()
+
+" Color Scheme
+:colorscheme PaperColor
+
 
 " Support for ALE
 let g:ale_linters = {'c':['betty-style', 'betty-doc', 'gcc']}
@@ -112,31 +121,28 @@ nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-l> :call CocActionAsync('jumpDefinition')<CR>
 
-nmap <F8> :TagbarToggle<CR>
+nmap <F6> :TagbarToggle<CR>
 
 :set completeopt-=preview " For No Previews
-:colorscheme jellybeans
 
 let g:NERDTreeDirArrowExpandable="+"
 let g:NERDTreeDirArrowCollapsible="~"
 
-" Support for air-line
-let g:airline_powerline_fonts = 1
-let g:airline_theme='iceberg'
+let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-tsserver', 'coc-html', 'coc-css', 'coc-clangd', 'coc-pyright', 'coc-cmake', 'coc-copilot', 'coc-eslint', 'coc-go', 'coc-html-css-support', 'coc-jedi', 'coc-phpls', 'coc-ltex', 'coc-markdownlint', 'coc-prettier', 'coc-sh', 'coc-rome', 'coc-svelte']
 
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
+" Clipboard Support For WSL (:h clipboard)
+:set clipboard+=unnamedplus
 
-" airline symbols
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
+let g:clipboard = {
+			\	'name': 'WslClipboard',
+			\	'copy': {
+			\	'+': 'clip.exe',
+			\	'*': 'clip.exe',
+			\	},
+			\	'paste': {
+			\	'+': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+			\	'*': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r",""))',
+			\	},
+			\	'cache_enabled': 0,
+			\}
 
-inoremap <expr> <Tab> pumvisible() ? coc#_select_confirm() : "<Tab>"
-
-let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-tsserver', 'coc-html', 'coc-css', 'coc-clangd', 'coc-pyright']
