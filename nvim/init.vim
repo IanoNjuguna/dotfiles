@@ -146,3 +146,6 @@ let g:clipboard = {
 			\	'cache_enabled': 0,
 			\}
 
+" Autocomplete using the tab key
+inoremap <silent><expr> <tab> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<TAB>"
+inoremap <silent><expr> <cr> "\<c-g>u\<CR>"
