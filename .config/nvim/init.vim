@@ -164,6 +164,9 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
+" coc.nvim extensions
+let g:coc_global_extensions = ['coc-json', 'coc-clangd', 'coc-css', 'coc-eslint', 'coc-html', 'coc-htmlhint', 'coc-markdownlint', 'coc-sh', 'coc-snippets', 'coc-tsserver', 'coc-prettier']
+
 " Some servers have issues with backup files
 set nobackup
 set nowritebackup
