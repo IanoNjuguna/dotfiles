@@ -14,36 +14,35 @@
 " Display the current line and column
 :set number
 
-" Dark Mode is default
-set background=dark
-
 " Enable syntax highlighting
-:syntax enable
+syntax enable
 
 " Configure column highlight
 set colorcolumn=80
-hi ColorColumn ctermbg=242 guibg=#4c4c4c
 
+" Encoding
+set encoding=UTF-8
 
 call plug#begin()
+
+" The default plugin directory will be as follows:
+"   - Vim (Linux/macOS): '~/.vim/plugged'
+"   - Vim (Windows): '~/vimfiles/plugged'
+"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+" You can specify a custom plugin directory by passing it as the argument
+"   - e.g. `call plug#begin('~/.vim/plugged')`
+"   - Avoid using standard Vim directory names like 'plugin'
+
+" Make sure you use single quotes
 
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
 
-" Theme
-Plug 'NLKNguyen/papercolor-theme'
-
-" Polyglot
-Plug 'sheerun/vim-polyglot'
-
-" IDE
-Plug 'https://github.com/neoclide/coc.nvim', {'branch': 'release'}
-
-" Developer Icons
-Plug 'https://github.com/ryanoasis/vim-devicons'
-
 " Any valid git URL is allowed
 Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+
+" Multiple Plug commands can be written in a single line using | separators
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 " On-demand loading
 Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -61,17 +60,8 @@ Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 " Plugin outside ~/.vim/plugged with post-update hook
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
-" Unmanaged plugin (manually installed and updated)
-Plug '~/my-prototype-plugin'
-
-" Initialize plugin system
-" - Automatically executes `filetype plugin indent on` and `syntax enable`.
-
 " Wakatime Plugin
 Plug 'wakatime/vim-wakatime'
-
-" For Commenting gcc & gc
-Plug 'https://github.com/tpope/vim-commentary'
 
 " Asynchronous Linter Engine (ALE)
 Plug 'dense-analysis/ale'
@@ -79,25 +69,41 @@ Plug 'dense-analysis/ale'
 "Betty-ale-vim
 Plug 'JuanDAC/betty-ale-vim'
 
-" Surrounding ysw:
-" provides mappings to easily delete, change and add
-" surroundings like parentheses, brackets, quotes, XML tags, etc in pairs.
-Plug 'http://github.com/tpope/vim-surround'
+" Theme
+Plug 'fcpg/vim-orbital'
 
-" Git Support
-Plug 'https://github.com/tpope/vim-fugitive.git'
+"Vim Airline (Status Bar)
+Plug 'vim-airline/vim-airline-themes'
+
+" Vim Devicons
+Plug 'ryanoasis/vim-devicons'
+
+" Surrounding ysw)
+Plug 'http://github.com/tpope/vim-surround'
 
 " NerdTree
 Plug 'https://github.com/preservim/nerdtree'
 
+" For Commenting gcc & gc
+Plug 'https://github.com/tpope/vim-commentary'
+
 " Status bar
 Plug 'https://github.com/vim-airline/vim-airline'
 
-"Airline Themes
-Plug 'https://github.com/vim-airline/vim-airline-themes'
+" PSQL Pluging needs :SQLSetType pgsql.vim
+Plug 'https://github.com/lifepillar/pgsql.vim'
 
 " CSS Color Preview
 Plug 'https://github.com/ap/vim-css-color'
+
+" Auto Completion
+Plug 'https://github.com/neoclide/coc.nvim'
+
+" Developer Icons
+Plug 'https://github.com/ryanoasis/vim-devicons'
+
+" Vim Terminal
+Plug 'https://github.com/tc50cal/vim-terminal'
 
 " Tagbar for code navigation
 Plug 'https://github.com/preservim/tagbar'
@@ -109,10 +115,6 @@ set encoding=UTF-8
 
 call plug#end()
 
-" Color Scheme
-:colorscheme PaperColor
-
-
 " Support for ALE
 let g:ale_linters = {'c':['betty-style', 'betty-doc', 'gcc']}
 
@@ -121,31 +123,64 @@ nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-l> :call CocActionAsync('jumpDefinition')<CR>
 
-nmap <F6> :TagbarToggle<CR>
+nmap <F8> :TagbarToggle<CR>
 
 :set completeopt-=preview " For No Previews
 
 let g:NERDTreeDirArrowExpandable="+"
 let g:NERDTreeDirArrowCollapsible="~"
 
-let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-tsserver', 'coc-html', 'coc-css', 'coc-clangd', 'coc-pyright', 'coc-cmake', 'coc-copilot', 'coc-eslint', 'coc-go', 'coc-html-css-support', 'coc-jedi', 'coc-phpls', 'coc-ltex', 'coc-markdownlint', 'coc-prettier', 'coc-sh', 'coc-rome', 'coc-svelte']
+" colorscheme
+colo orbital
 
-" Clipboard Support For WSL (:h clipboard)
-:set clipboard+=unnamedplus
+" --- Just Some Notes ---
+" :PlugClean :PlugInstall :UpdateRemotePlugins
+let g:coc_disable_startup_warning = 1
+" To install Coc plugins:
+"	:CocInstall coc-pyright
+"	:CocInstall coc-clangd
+"	:CocInstall coc-snippets
+"	:CocCommand snippets.edit... FOR EACH FILE TYPE
 
-let g:clipboard = {
-			\	'name': 'WslClipboard',
-			\	'copy': {
-			\	'+': 'clip.exe',
-			\	'*': 'clip.exe',
-			\	},
-			\	'paste': {
-			\	'+': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-			\	'*': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r",""))',
-			\	},
-			\	'cache_enabled': 0,
-			\}
+" air-line config
+" status bar at the top
+let g:airline#extensions#tabline#enabled = 1
 
-" Autocomplete using the tab key
-inoremap <silent><expr> <tab> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<TAB>"
-inoremap <silent><expr> <cr> "\<c-g>u\<CR>"
+" status bar theme
+let g:airline_theme='base16'
+
+let g:airline_powerline_fonts = 1
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+" airline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
+
+" Some servers have issues with backup files
+set nobackup
+set nowritebackup
+
+" Having longer updatetime (default is 4000 ms = 4s) leads to noticeable
+" delays and poor user experience
+set updatetime=300
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved
+set signcolumn=yes
+
+" Make <CR> (ENTER Key) to accept selected completion item
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
